@@ -26,7 +26,7 @@ const sortingBtnRecentEl = document.querySelector(".sorting__button--recent");
 const spinnerSearchEl = document.querySelector(".spinner--search");
 const spinnerJobDetailsEl = document.querySelector(".spinner--job-details");
 
-// --- Search Component ---
+// --- Search COMPONENT ---
 (() => {
   const submitHandler = (event) => {
     // prevent default behaviour
@@ -106,3 +106,28 @@ const spinnerJobDetailsEl = document.querySelector(".spinner--job-details");
   };
   searchFormEl.addEventListener("submit", submitHandler);
 })();
+
+// --- JOB LIST COMPONENT ---
+const clickHandler = () => {
+  // prevent default behavior (navigation)
+  event.preventDefault();
+
+  // get clicked job item
+  const jobItemEl = event.target.closest(".job-item");
+  //   remove the active class from previously active job item.
+  //   document.querySelector(".job-item--active") &&
+  //     document
+  //       .querySelector(".job-item--active")
+  //       .classList.remove("job-item--active");
+  // Or shorter way by using '?'
+  document
+    .querySelector(".job-item--active")
+    ?.classList.remove("job-item--active");
+  // add active class
+  jobItemEl.classList.add("job-item--active");
+  // empty the job details section
+  jobDetailsContentEl.innerHTML = "";
+  // render spinner
+  spinnerJobDetailsEl.classList.add("spinner--visible");
+};
+jobListSearchEl.addEventListener("click", clickHandler);
