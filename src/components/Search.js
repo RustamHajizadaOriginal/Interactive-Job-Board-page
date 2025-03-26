@@ -1,3 +1,10 @@
+import {
+  searchInputEl,
+  searchFormEl,
+  spinnerSearchEl,
+  jobListSearchEl,
+  numberEl,
+} from "../common.js";
 const submitHandler = (event) => {
   // prevent default behaviour
   event.preventDefault();

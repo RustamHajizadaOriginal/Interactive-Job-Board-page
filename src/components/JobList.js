@@ -1,3 +1,10 @@
+import {
+  jobListSearchEl,
+  jobDetailsContentEl,
+  spinnerJobDetailsEl,
+  numberEl,
+} from "../common.js";
+
 const clickHandler = () => {
   // prevent default behavior (navigation)
   event.preventDefault();
