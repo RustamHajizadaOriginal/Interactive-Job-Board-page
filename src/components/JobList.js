@@ -1,10 +1,4 @@
-import {
-  jobListSearchEl,
-  jobDetailsContentEl,
-  spinnerJobDetailsEl,
-  numberEl,
-} from "../common.js";
-import renderError from "./Error.js";
+import { jobListSearchEl, jobDetailsContentEl } from "../common.js";
 import renderSpinner from "./Spinner.js";
 const clickHandler = () => {
   // prevent default behavior (navigation)
@@ -26,7 +20,7 @@ const clickHandler = () => {
   // empty the job details section
   jobDetailsContentEl.innerHTML = "";
   // render spinner
-  renderSpinner("search");
+  renderSpinner("job-details");
   // get the id
   const id = jobItemEl.children[0].getAttribute("href");
   // fetch job item data
@@ -43,7 +37,7 @@ const clickHandler = () => {
       const { jobItem } = data;
       console.log(jobItem);
       // remvoe the spinner
-      renderSpinner("search");
+      renderSpinner("job-details");
       // render job details
       const jobDetailsHTML = `<img src="${jobItem.coverImgURL}" alt="#" class="job-details__cover-img">
       

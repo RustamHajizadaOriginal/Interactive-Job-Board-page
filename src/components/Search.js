@@ -1,7 +1,6 @@
 import {
   searchInputEl,
   searchFormEl,
-  spinnerSearchEl,
   jobListSearchEl,
   numberEl,
 } from "../common.js";
@@ -15,7 +14,7 @@ const submitHandler = (event) => {
   const searchText = searchInputEl.value;
 
   // validation(regular expression example)
-  const forbiddenPattern = /[0-999999999]/;
+  const forbiddenPattern = /[0-9]/;
   const patternMatch = forbiddenPattern.test(searchText);
   if (patternMatch) {
     renderError(
