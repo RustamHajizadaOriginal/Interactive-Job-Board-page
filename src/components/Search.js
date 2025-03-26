@@ -5,6 +5,7 @@ import {
   jobListSearchEl,
   numberEl,
 } from "../common.js";
+import renderError from "./Error.js";
 const submitHandler = (event) => {
   // prevent default behaviour
   event.preventDefault();
@@ -13,14 +14,12 @@ const submitHandler = (event) => {
   const searchText = searchInputEl.value;
 
   // validation(regular expression example)
-  const forbiddenPattern = /python/;
+  const forbiddenPattern = /[0-999999999]/;
   const patternMatch = forbiddenPattern.test(searchText);
   if (patternMatch) {
-    errorTextEl.textContent = "Your search query contains forbidden words";
-    errorEl.classList.add("error--visible");
-    setTimeout(() => {
-      errorEl.classList.remove("error--visible");
-    }, 4500);
+    renderError(
+      "Your search query contains forbidden characters, please remove then and try again"
+    );
     return;
   }
   // blur imput
