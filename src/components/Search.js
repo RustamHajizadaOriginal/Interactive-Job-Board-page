@@ -4,6 +4,7 @@ import {
   searchFormEl,
   jobListSearchEl,
   numberEl,
+  getData,
 } from "../common.js";
 import renderError from "./Error.js";
 import renderSpinner from "./Spinner.js";
@@ -31,16 +32,9 @@ const submitHandler = async (event) => {
   //   render spinner
   renderSpinner("search");
 
-  //  fetch search results
   try {
-    const response = await fetch(`${BASE_API_URL}/jobs?search=${searchText}`);
-    const data = await response.json();
-    if (!response.ok) {
-      //4xxx, 5xxx status codes.
-      throw new Error(
-        "Resource issue (e.g. resouce doesn't exist) or server issue"
-      );
-    }
+    //  fetch search results
+    const data = await getData(`${BASE_API_URL}/jobs?search=${searchText}`);
     // extract job items
     const { jobItems } = data;
     // remove spinner
