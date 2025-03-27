@@ -64,9 +64,9 @@ const clickHandler = async (event) => {
   const id = jobItemEl.children[0].getAttribute("href");
   try {
     //  fetch search results
-    getData(`${BASE_API_URL}/jobs/${id}`);
+    const data = await getData(`${BASE_API_URL}/jobs/${id}`);
     // extract job items
-    const { jobItems } = data;
+    const { jobItem } = data;
     // remove spinner
     renderSpinner("job-details");
     // render job details
