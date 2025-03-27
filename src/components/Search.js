@@ -1,5 +1,6 @@
 import {
   BASE_API_URL,
+  state,
   searchInputEl,
   searchFormEl,
   jobListSearchEl,
@@ -9,6 +10,7 @@ import {
 import renderError from "./Error.js";
 import renderSpinner from "./Spinner.js";
 import renderJobList from "./JobList.js";
+
 const submitHandler = async (event) => {
   // prevent default behaviour
   event.preventDefault();
@@ -37,12 +39,16 @@ const submitHandler = async (event) => {
     const data = await getData(`${BASE_API_URL}/jobs?search=${searchText}`);
     // extract job items
     const { jobItems } = data;
+
+    // update state
+    state.searchJobItems = jobItems;
+
     // remove spinner
     renderSpinner("search");
     // render number of results
     numberEl.textContent = jobItems.length;
     // render job items in search job list
-    renderJobList(jobItems);
+    renderJobList();
   } catch (error) {
     //network problem or other errors (e.g. trying to partse someting not JSON as JSON)
     renderSpinner("search");
