@@ -8,6 +8,15 @@ import {
 } from "../common.js";
 
 import renderJobList from "./JobList.js";
+
+const renderPaginationButtons = () => {
+  // display back button if we are on page 2 or further
+  if (state.currentPage >= 2) {
+    paginationBtnBackEl.classList.remove("pagination__button--hidden");
+  } else {
+    paginationBtnBackEl.classList.add("pagination__button--hidden");
+  }
+};
 const clickHandler = (event) => {
   // get clicked button element
   const clickedButtonEL = event.target.closest(".pagination__button");
@@ -19,6 +28,9 @@ const clickHandler = (event) => {
 
   // update state
   nextPage ? state.currentPage++ : state.currentPage--;
+
+  // render pagination buttons
+  renderPaginationButtons();
   // render job items for that page
   renderJobList();
 };
