@@ -50,4 +50,5 @@ export const getData = async (completeURL) => {
     //4xxx, 5xxx status codes.
     throw new Error(data.description);
   }
+  return data;
 };

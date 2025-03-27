@@ -2,6 +2,7 @@ import {
   BASE_API_URL,
   jobListSearchEl,
   jobDetailsContentEl,
+  getData,
 } from "../common.js";
 import renderSpinner from "./Spinner.js";
 import renderJobDetaiils from "./JobDetails.js";
@@ -61,51 +62,20 @@ const clickHandler = async (event) => {
   renderSpinner("job-details");
   // get the id
   const id = jobItemEl.children[0].getAttribute("href");
-  // fetch job item data
   try {
-    const response = await fetch(`${BASE_API_URL}/jobs/${id}`);
-    const data = await response.json();
-    // extract job item from data object
-    const { jobItem } = data;
-    // remvoe the spinner
+    //  fetch search results
+    getData(`${BASE_API_URL}/jobs/${id}`);
+    // extract job items
+    const { jobItems } = data;
+    // remove spinner
     renderSpinner("job-details");
     // render job details
-    renderJobDetails(jobItem);
+    renderJobDetaiils(jobItem);
   } catch (error) {
     //network problem or other errors (e.g. trying to partse someting not JSON as JSON)
     renderSpinner("job-details");
     renderError(error.message);
   }
-
-  // fetch(`${BASE_API_URL}/jobs/${id}`)
-  //   .then((response) => {
-  //     if (!response.ok) {
-  //       console.log("something went wrong");
-  //       throw new Error(
-  //         "Resource issue (e.g. resouce doesn't exist) or server issue"
-  //       );
-  //       // throw {
-  //       //   message:
-  //       //     "Resource issue (e.g. resouce doesn't exist) or server issue",
-  //       //   name: "Error",
-  //       // };
-  //     }
-  //     return response.json();
-  //   })
-  //   .then((data) => {
-  //     // extract job item from data object
-  //     const { jobItem } = data;
-  //     console.log(jobItem);
-  //     // remvoe the spinner
-  //     renderSpinner("job-details");
-  //     // render job details
-  //     renderJobDetails(jobItem);
-  //   })
-  //   .catch((error) => {
-  //     //network problem or other errors (e.g. trying to partse someting not JSON as JSON)
-  //     renderSpinner("job-details");
-  //     renderError(error.message);
-  //   });
 };
 jobListSearchEl.addEventListener("click", clickHandler);
 
