@@ -15,6 +15,9 @@ const clickHandler = (event) => {
   clickButtonEl.className.includes("--recent") ? true : false;
   // sort job items
   if (recent) {
+    state.searchJobItems.sort((a, b) => {
+      return (a.daysAgo = b.daysAgo);
+    });
   } else {
   }
 };
