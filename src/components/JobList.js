@@ -38,7 +38,7 @@ const renderJobList = (jobItems) => {
     jobListSearchEl.insertAdjacentHTML("beforeend", newJobItemHTML);
   });
 };
-const clickHandler = () => {
+const clickHandler = async (event) => {
   // prevent default behavior (navigation)
   event.preventDefault();
 
@@ -62,35 +62,50 @@ const clickHandler = () => {
   // get the id
   const id = jobItemEl.children[0].getAttribute("href");
   // fetch job item data
-  fetch(`${BASE_API_URL}/jobs/${id}`)
-    .then((response) => {
-      if (!response.ok) {
-        console.log("something went wrong");
-        throw new Error(
-          "Resource issue (e.g. resouce doesn't exist) or server issue"
-        );
-        // throw {
-        //   message:
-        //     "Resource issue (e.g. resouce doesn't exist) or server issue",
-        //   name: "Error",
-        // };
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // extract job item from data object
-      const { jobItem } = data;
-      console.log(jobItem);
-      // remvoe the spinner
-      renderSpinner("job-details");
-      // render job details
-      renderJobDetails(jobItem);
-    })
-    .catch((error) => {
-      //network problem or other errors (e.g. trying to partse someting not JSON as JSON)
-      renderSpinner("job-details");
-      renderError(error.message);
-    });
+  try {
+    const response = await fetch(`${BASE_API_URL}/jobs/${id}`);
+    const data = await response.json();
+    // extract job item from data object
+    const { jobItem } = data;
+    // remvoe the spinner
+    renderSpinner("job-details");
+    // render job details
+    renderJobDetails(jobItem);
+  } catch (error) {
+    //network problem or other errors (e.g. trying to partse someting not JSON as JSON)
+    renderSpinner("job-details");
+    renderError(error.message);
+  }
+
+  // fetch(`${BASE_API_URL}/jobs/${id}`)
+  //   .then((response) => {
+  //     if (!response.ok) {
+  //       console.log("something went wrong");
+  //       throw new Error(
+  //         "Resource issue (e.g. resouce doesn't exist) or server issue"
+  //       );
+  //       // throw {
+  //       //   message:
+  //       //     "Resource issue (e.g. resouce doesn't exist) or server issue",
+  //       //   name: "Error",
+  //       // };
+  //     }
+  //     return response.json();
+  //   })
+  //   .then((data) => {
+  //     // extract job item from data object
+  //     const { jobItem } = data;
+  //     console.log(jobItem);
+  //     // remvoe the spinner
+  //     renderSpinner("job-details");
+  //     // render job details
+  //     renderJobDetails(jobItem);
+  //   })
+  //   .catch((error) => {
+  //     //network problem or other errors (e.g. trying to partse someting not JSON as JSON)
+  //     renderSpinner("job-details");
+  //     renderError(error.message);
+  //   });
 };
 jobListSearchEl.addEventListener("click", clickHandler);
 
