@@ -8,7 +8,7 @@ import {
 import renderError from "./Error.js";
 import renderSpinner from "./Spinner.js";
 import renderJobList from "./JobList.js";
-const submitHandler = (event) => {
+const submitHandler = async (event) => {
   // prevent default behaviour
   event.preventDefault();
 
@@ -31,26 +31,53 @@ const submitHandler = (event) => {
   //   render spinner
   renderSpinner("search");
 
-  //  fetch data
-  fetch(`${BASE_API_URL}/jobs?search=${searchText}`)
-    .then((response) => {
-      if (!response.ok) {
-        console.log("something went wrong");
-        return;
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // extract job items
-      const { jobItems } = data;
-      console.log(jobItems);
-      // remove spinner
-      renderSpinner("search");
-      // render number of results
-      numberEl.textContent = jobItems.length;
-      // render job items in search job list
-      renderJobList(jobItems);
-    })
-    .catch((error) => console.log(error));
+  //  fetch search results
+  try {
+    const response = await fetch(`${BASE_API_URL}/jobs?search=${searchText}`);
+    const data = await response.json();
+    // extract job items
+    const { jobItems } = data;
+    // remove spinner
+    renderSpinner("search");
+    // render number of results
+    numberEl.textContent = jobItems.length;
+    // render job items in search job list
+    renderJobList(jobItems);
+  } catch (error) {
+    //network problem or other errors (e.g. trying to partse someting not JSON as JSON)
+    renderSpinner("search");
+    renderError(error.message);
+  }
+  // fetch(`${BASE_API_URL}/jobs?search=${searchText}`)
+  //   .then((response) => {
+  //     if (!response.ok) {
+  //       console.log("something went wrong");
+  //       throw new Error(
+  //         "Resource issue (e.g. resouce doesn't exist) or server issue"
+  //       );
+  //       // throw {
+  //       //   message:
+  //       //     "Resource issue (e.g. resouce doesn't exist) or server issue",
+  //       //   name: "Error",
+  //       // };
+  //     }
+  //     return response.json();
+  //   })
+  //   .then((data) => {
+  //     // extract job items
+  //     const { jobItems } = data;
+  //     console.log(jobItems);
+  //     // remove spinner
+  //     renderSpinner("search");
+  //     // render number of results
+  //     numberEl.textContent = jobItems.length;
+  //     // render job items in search job list
+  //     renderJobList(jobItems);
+  //   })
+  //   .catch((error) => {
+  //     //network problem or other errors (e.g. trying to partse someting not JSON as JSON)
+  //     renderSpinner("search");
+  //     renderError(error.message);
+  //   });
 };
 searchFormEl.addEventListener("submit", submitHandler);

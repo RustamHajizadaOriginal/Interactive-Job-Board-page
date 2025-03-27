@@ -4,7 +4,8 @@ import {
   jobDetailsContentEl,
 } from "../common.js";
 import renderSpinner from "./Spinner.js";
-import renderJobDetails from "./JobDetails.js";
+import renderJobDetaiils from "./JobDetails.js";
+import renderError from "./Error.js";
 
 const renderJobList = (jobItems) => {
   jobItems.slice(0, 7).forEach((jobItem) => {
@@ -64,8 +65,15 @@ const clickHandler = () => {
   fetch(`${BASE_API_URL}/jobs/${id}`)
     .then((response) => {
       if (!response.ok) {
-        console.log("Something went wrong");
-        return;
+        console.log("something went wrong");
+        throw new Error(
+          "Resource issue (e.g. resouce doesn't exist) or server issue"
+        );
+        // throw {
+        //   message:
+        //     "Resource issue (e.g. resouce doesn't exist) or server issue",
+        //   name: "Error",
+        // };
       }
       return response.json();
     })
@@ -78,7 +86,11 @@ const clickHandler = () => {
       // render job details
       renderJobDetails(jobItem);
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      //network problem or other errors (e.g. trying to partse someting not JSON as JSON)
+      renderSpinner("job-details");
+      renderError(error.message);
+    });
 };
 jobListSearchEl.addEventListener("click", clickHandler);
 
