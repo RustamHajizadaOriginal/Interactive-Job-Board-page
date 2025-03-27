@@ -35,6 +35,12 @@ const submitHandler = async (event) => {
   try {
     const response = await fetch(`${BASE_API_URL}/jobs?search=${searchText}`);
     const data = await response.json();
+    if (!response.ok) {
+      //4xxx, 5xxx status codes.
+      throw new Error(
+        "Resource issue (e.g. resouce doesn't exist) or server issue"
+      );
+    }
     // extract job items
     const { jobItems } = data;
     // remove spinner
@@ -48,36 +54,5 @@ const submitHandler = async (event) => {
     renderSpinner("search");
     renderError(error.message);
   }
-  // fetch(`${BASE_API_URL}/jobs?search=${searchText}`)
-  //   .then((response) => {
-  //     if (!response.ok) {
-  //       console.log("something went wrong");
-  //       throw new Error(
-  //         "Resource issue (e.g. resouce doesn't exist) or server issue"
-  //       );
-  //       // throw {
-  //       //   message:
-  //       //     "Resource issue (e.g. resouce doesn't exist) or server issue",
-  //       //   name: "Error",
-  //       // };
-  //     }
-  //     return response.json();
-  //   })
-  //   .then((data) => {
-  //     // extract job items
-  //     const { jobItems } = data;
-  //     console.log(jobItems);
-  //     // remove spinner
-  //     renderSpinner("search");
-  //     // render number of results
-  //     numberEl.textContent = jobItems.length;
-  //     // render job items in search job list
-  //     renderJobList(jobItems);
-  //   })
-  //   .catch((error) => {
-  //     //network problem or other errors (e.g. trying to partse someting not JSON as JSON)
-  //     renderSpinner("search");
-  //     renderError(error.message);
-  //   });
 };
 searchFormEl.addEventListener("submit", submitHandler);
