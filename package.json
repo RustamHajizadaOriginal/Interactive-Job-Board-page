@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack"
   },
-  "browserlist":[
+  "browserlist": [
     ">0.1%",
     "not dead"
   ],
@@ -23,8 +23,12 @@
   "devDependencies": {
     "@babel/core": "^7.26.10",
     "@babel/preset-env": "^7.26.9",
+    "autoprefixer": "^10.4.21",
     "babel-loader": "^10.0.0",
     "core-js": "^3.41.0",
+    "cssnano": "^7.0.6",
+    "postcss-loader": "^8.1.1",
+    "postcss-pxtorem": "^6.1.0",
     "webpack": "^5.98.0",
     "webpack-cli": "^6.0.1"
   }
