@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-   "build": "webpack"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,9 @@
   "homepage": "https://github.com/RustamHajizadaOriginal/Interactive-Job-Board-page#readme",
   "description": "",
   "devDependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
+    "babel-loader": "^10.0.0",
     "webpack": "^5.98.0",
     "webpack-cli": "^6.0.1"
   }
