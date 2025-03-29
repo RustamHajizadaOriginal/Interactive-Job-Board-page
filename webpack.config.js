@@ -1,9 +1,15 @@
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
   mode: "production",
   entry: "./src/index.js",
   output: {
     filename: "main.js",
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "main.css",
+    }),
+  ],
   module: {
     rules: [
       {
@@ -13,7 +19,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ["postcss-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
       },
     ],
   },
