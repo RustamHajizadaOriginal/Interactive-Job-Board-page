@@ -5,6 +5,10 @@
   "scripts": {
     "build": "webpack"
   },
+  "browserlist":[
+    ">0.1%",
+    "not dead"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RustamHajizadaOriginal/Interactive-Job-Board-page.git"
