@@ -34,3 +34,7 @@ export default renderError;
 //   let b = 5;
 //   let c = 10;
 // } catch (error) {}
+// const a = 10;
+// b = 20;
+// c = 30;
+// d = 40;
