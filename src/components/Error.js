@@ -9,3 +9,28 @@ const renderError = (message = "Something went wrong") => {
 };
 
 export default renderError;
+
+// const a = 10;
+// const hello = () => {
+//   let b = 5;
+//   let c = 10;
+// };
+// hello();
+// import x from "./x.js";
+
+// function hello() {
+//   let b = 5;
+//   let c = 10;
+//   return b + c;
+// }
+
+// if ((z = 10)) {
+//   let b = 5;
+//   let c = 10;
+// } else {
+// }
+
+// try {
+//   let b = 5;
+//   let c = 10;
+// } catch (error) {}
